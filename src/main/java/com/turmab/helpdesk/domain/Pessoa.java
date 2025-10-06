@@ -18,62 +18,63 @@ import javax.persistence.Id;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.turmab.helpdesk.domain.enums.Perfil;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class Pessoa.
+ * Classe abstrata que representa uma pessoa no sistema HelpDesk.
+ * Serve como superclasse para Cliente e Tecnico.
+ * Contém atributos comuns como id, nome, cpf, email, senha, perfis e data de criação.
+ * 
+ * @author Gabriel Samilo
  */
 @Entity
 public abstract class Pessoa implements Serializable{
 	
-	/** The Constant serialVersionUID. */
+	
 	private static final long serialVersionUID = 1L;
 
-	/** The id. */
+	/** Identificador único da pessoa */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Integer id;
 	
-	/** The nome. */
+	/** Nome da pessoa */
 	protected String nome;
 	
 	
-	/** The cpf. */
+	/** CPF da pessoa (único) */
 	@Column(unique = true)
 	protected String cpf;
 	
-	/** The email. */
+	/** Email da pessoa (único) */
 	@Column(unique = true)
 	protected String email;
 	
-	/** The senha. */
+	/** Senha da pessoa */
 	protected String senha;
 	
-	/** The perfis. */
+	/** Conjunto de perfis da pessoa */
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "PERFIS")
 	protected Set<Integer> perfis = new HashSet<>();
 	
-	/** The data criacao. */
+	/** Data de criação do registro */
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	protected LocalDate dataCriacao = LocalDate.now();
 	
-	/**
-	 * Instantiates a new pessoa.
-	 */
+	/** Construtor padrão */
 	public Pessoa() {
 		super();
 		addPerfil(Perfil.CLIENTE);
 	}
 
 	/**
-	 * Instantiates a new pessoa.
-	 *
-	 * @param id the id
-	 * @param nome the nome
-	 * @param cpf the cpf
-	 * @param email the email
-	 * @param senha the senha
-	 */
+     * Construtor com parâmetros.
+     * 
+     * @param id Identificador da pessoa
+     * @param nome Nome da pessoa
+     * @param cpf CPF da pessoa
+     * @param email Email da pessoa
+     * @param senha Senha da pessoa
+     */
 	public Pessoa(Integer id, String nome, String cpf, String email, String senha) {
 		super();
 		this.id = id;
@@ -84,143 +85,83 @@ public abstract class Pessoa implements Serializable{
 		addPerfil(Perfil.CLIENTE);
 	}
 
-	/**
-	 * Gets the id.
-	 *
-	 * @return the id
-	 */
+	/** @return o ID da pessoa */
 	public Integer getId() {
 		return id;
 	}
 
-	/**
-	 * Sets the id.
-	 *
-	 * @param id the new id
-	 */
+	/** @param id define o ID da pessoa */
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	/**
-	 * Gets the nome.
-	 *
-	 * @return the nome
-	 */
+	/** @return o nome da pessoa */
 	public String getNome() {
 		return nome;
 	}
 
-	/**
-	 * Sets the nome.
-	 *
-	 * @param nome the new nome
-	 */
+	/** @param nome define o nome da pessoa */
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
-
-
-	/**
-	 * Gets the cpf.
-	 *
-	 * @return the cpf
-	 */
+	/** @return o CPF da pessoa */
 	public String getCpf() {
 		return cpf;
 	}
 
-	/**
-	 * Sets the cpf.
-	 *
-	 * @param cpf the new cpf
-	 */
+	/** @param cpf define o CPF da pessoa */
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
 
-	/**
-	 * Gets the email.
-	 *
-	 * @return the email
-	 */
+	/** @return o email da pessoa */
 	public String getEmail() {
 		return email;
 	}
 
-	/**
-	 * Sets the email.
-	 *
-	 * @param email the new email
-	 */
+	/** @param email define o email da pessoa */
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
-	/**
-	 * Gets the senha.
-	 *
-	 * @return the senha
-	 */
+	/** @return a senha da pessoa */
 	public String getSenha() {
 		return senha;
 	}
 
-	/**
-	 * Sets the senha.
-	 *
-	 * @param senha the new senha
-	 */
+	/** @param senha define a senha da pessoa */
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
 
 	/**
-	 * Gets the perfis.
-	 *
-	 * @return the perfis
-	 */
+     * Retorna o conjunto de perfis da pessoa como enum Perfil.
+     * 
+     * @return Conjunto de Perfis
+     */
 	public Set<Perfil> getPerfis() {
 		return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
 	}
 
 	/**
-	 * add a perfil.
-	 *
-	 * @param perfil the perfil
-	 */
+     * Adiciona um perfil à pessoa.
+     * 
+     * @param perfil Perfil a ser adicionado
+     */
 	public void addPerfil(Perfil perfil) {
 		this.perfis.add(perfil.getCodigo());
 	}
 
-	/**
-	 * Gets the data criacao.
-	 *
-	 * @return the data criacao
-	 */
+	/** @return a data de criação do registro */
 	public LocalDate getDataCriacao() {
 		return dataCriacao;
 	}
 
-	/**
-	 * Sets the data criacao.
-	 *
-	 * @param dataCriacao the new data criacao
-	 */
+	/** @param dataCriacao define a data de criação do registro */
 	public void setDataCriacao(LocalDate dataCriacao) {
 		this.dataCriacao = dataCriacao;
 	}
-
-	
-	
-	/**
-	 * O método equals verifica se dois objetos são "iguais" com base em seus atributos,
-	 * enquanto o hashCode gera um código numérico que representa o objeto,
-	 * permitindo que coleções encontrem objetos de forma rápida.
-	 *
-	 * @return the int
-	 */
 	
 	/**
 	 * Hash code.
@@ -237,10 +178,11 @@ public abstract class Pessoa implements Serializable{
 	}
 
 	/**
-	 * Equals.
+	 * O método equals verifica se dois objetos são "iguais" com base em seus atributos,
+	 * enquanto o hashCode gera um código numérico que representa o objeto,
+	 * permitindo que coleções encontrem objetos de forma rápida.
 	 *
-	 * @param obj the obj
-	 * @return true, if successful
+	 * @return the int
 	 */
 	@Override
 	public boolean equals(Object obj) {

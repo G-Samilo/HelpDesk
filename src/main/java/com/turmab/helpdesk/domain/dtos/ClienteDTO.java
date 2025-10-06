@@ -7,22 +7,45 @@ import java.util.stream.Collectors;
 import com.turmab.helpdesk.domain.Cliente;
 import com.turmab.helpdesk.domain.enums.Perfil;
 
+/**
+ * Data Transfer Object (DTO) para a entidade Cliente.
+ * Permite transferir dados do cliente sem expor a entidade completa.
+ * Contém informações básicas, perfis e data de criação.
+ * 
+ * Autor: Gabriel Samilo
+ */
 public class ClienteDTO implements Serializable {
-    private static final long serialVersionUID = 1L;
+    
+	private static final long serialVersionUID = 1L;
 
+    /** Identificador do cliente */
     private Integer id;
+    
+    /** Nome do cliente */
     private String nome;
+    
+    /** CPF do cliente */
     private String cpf;
+    
+    /** Email do cliente */
     private String email;
-    private Set<Integer> perfis;  // Guardando os códigos dos perfis
-    private String dataCriacao;   // Se houver esse campo em Pessoa
+    
+    /** Conjunto de códigos dos perfis do cliente */
+    private Set<Integer> perfis;
+    
+    /** Data de criação do cliente em formato String */
+    private String dataCriacao;
 
-    // Construtor padrão
+    /** Construtor padrão */
     public ClienteDTO() {
         super();
     }
 
-    // Construtor recebendo a entidade Cliente
+    /**
+     * Construtor que converte uma entidade Cliente em DTO.
+     * 
+     * @param obj Entidade Cliente a ser convertida
+     */
     public ClienteDTO(Cliente obj) {
         this.id = obj.getId();
         this.nome = obj.getNome();
@@ -34,7 +57,7 @@ public class ClienteDTO implements Serializable {
         this.dataCriacao = (obj.getDataCriacao() != null) ? obj.getDataCriacao().toString() : null;
     }
 
-    // Getters e Setters
+    /** Getters e Setters */
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
 

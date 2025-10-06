@@ -9,22 +9,45 @@ import java.util.stream.Collectors;
 
 import com.turmab.helpdesk.domain.Tecnico;
 
+/**
+ * Data Transfer Object (DTO) para a entidade Tecnico.
+ * Permite transferir dados do técnico sem expor a entidade completa.
+ * Contém informações básicas, perfis e data de criação.
+ * 
+ * @author: Gabriel Samilo
+ */
 public class TecnicoDTO implements Serializable {
-    private static final long serialVersionUID = 1L;
-
-    private Integer id;
-    private String nome;
-    private String cpf;
-    private String email;
-    private Set<Integer> perfis;  // Guardando os códigos do enum
-    private String dataCriacao;   // Se tiver esse campo em Pessoa
-
     
+	private static final long serialVersionUID = 1L;
+
+    /** Identificador do técnico */
+    private Integer id;
+    
+    /** Nome do técnico */
+    private String nome;
+    
+    /** CPF do técnico */
+    private String cpf;
+    
+    /** Email do técnico */
+    private String email;
+    
+    /** Conjunto de códigos dos perfis do técnico */
+    private Set<Integer> perfis;
+    
+    /** Data de criação do técnico em formato String */
+    private String dataCriacao;
+
+    /** Construtor padrão */
     public TecnicoDTO() {
         super();
     }
 
-    // Construtor que recebe a entidade Tecnico
+    /**
+     * Construtor que converte uma entidade Tecnico em DTO.
+     *
+     * @param obj Entidade Tecnico a ser convertida
+     */
     public TecnicoDTO(Tecnico obj) {
         this.id = obj.getId();
         this.nome = obj.getNome();
@@ -36,7 +59,7 @@ public class TecnicoDTO implements Serializable {
         this.dataCriacao = (obj.getDataCriacao() != null) ? obj.getDataCriacao().toString() : null;
     }
 
-    // Getters e Setters
+    /** Getters e Setters */
     public Integer getId() {
         return id;
     }

@@ -3,27 +3,47 @@ package com.turmab.helpdesk.domain.dtos;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
+/**
+ * Data Transfer Object (DTO) utilizado para criar ou atualizar um cliente.
+ * Contém validações básicas para os campos obrigatórios.
+ * 
+ * @author: Gabriel Samilo
+ */
 public class ClienteCreateDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    /** Identificador do cliente (opcional, usado em atualizações) */
     private Integer id;
     
+    /** Nome do cliente (obrigatório) */
     @NotNull(message = "Nome é obrigatório")
     private String nome;
     
+    /** CPF do cliente (obrigatório) */
     @NotNull(message = "CPF é obrigatório")
     private String cpf;
     
+    /** Email do cliente (obrigatório) */
     @NotNull(message = "Email é obrigatório")
     private String email;
     
+    /** Senha do cliente (obrigatório) */
     @NotNull(message = "Senha é obrigatória")
     private String senha;
 
-    // Construtores
+    /** Construtor padrão */
     public ClienteCreateDTO() {
     }
 
+    /**
+     * Construtor com parâmetros para criar ou atualizar um cliente.
+     *
+     * @param id Identificador do cliente
+     * @param nome Nome do cliente
+     * @param cpf CPF do cliente
+     * @param email Email do cliente
+     * @param senha Senha do cliente
+     */
     public ClienteCreateDTO(Integer id, String nome, String cpf, String email, String senha) {
         this.id = id;
         this.nome = nome;
@@ -32,7 +52,7 @@ public class ClienteCreateDTO implements Serializable {
         this.senha = senha;
     }
 
-    // Getters e Setters
+    /** Getters e Setters */
     public Integer getId() { 
     	return id;
     }

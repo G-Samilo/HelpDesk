@@ -8,31 +8,60 @@ import com.turmab.helpdesk.domain.Chamado;
 import com.turmab.helpdesk.domain.enums.Prioridade;
 import com.turmab.helpdesk.domain.enums.Status;
 
+/**
+ * Data Transfer Object (DTO) para a entidade Chamado.
+ * Permite transferir dados entre as camadas sem expor a entidade completa.
+ * Contém informações do chamado, incluindo IDs e nomes do técnico e cliente.
+ * 
+ * @author: Gabriel Samilo
+ */
 public class ChamadoDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    /** Identificador do chamado */
     private Integer id;
 
+    /** Data de abertura do chamado */
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataAbertura;
 
+    /** Data de fechamento do chamado */
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataFechamento;
 
+    /** Código da prioridade do chamado */
     private Integer prioridade;
+    
+    /** Código do status do chamado */
     private Integer status;
+    
+    /** Título do chamado */
     private String titulo;
+    
+    /** Observações do chamado */
     private String observacoes;
-    private Integer tecnico; // apenas o ID do técnico
-    private Integer cliente; // apenas o ID do cliente
-    private String nomeTecnico; // opcional: nome do técnico
-    private String nomeCliente; // opcional: nome do cliente
+    
+    /** ID do técnico responsável pelo chamado */
+    private Integer tecnico;
+    /** ID do cliente solicitante do chamado */
+    private Integer cliente;
+    
+    /** Nome do técnico */
+    private String nomeTecnico;
+    
+    /** Nome do cliente */
+    private String nomeCliente;
 
+    /** Construtor padrão */
     public ChamadoDTO() {
         super();
     }
 
-    // Construtor para converter entidade em DTO
+    /**
+     * Construtor que converte uma entidade Chamado em DTO.
+     * 
+     * @param obj Entidade Chamado a ser convertida
+     */
     public ChamadoDTO(Chamado obj) {
         this.id = obj.getId();
         this.dataAbertura = obj.getDataAbertura();
@@ -47,7 +76,7 @@ public class ChamadoDTO implements Serializable {
         this.nomeCliente = (obj.getCliente() != null) ? obj.getCliente().getNome() : null;
     }
 
-    // Getters e Setters
+    /** Getters e Setters */
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
 
