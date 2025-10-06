@@ -18,7 +18,7 @@ import com.turmab.helpdesk.service.exceptions.ObjectNotFoundException;
  * </p>
  */
 @ControllerAdvice
-public class ResourceExceptionHandle {
+public class ResourceExceptionHandler {
 
 	/**
 	 * Manipula a exceção {@link ObjectNotFoundException}.

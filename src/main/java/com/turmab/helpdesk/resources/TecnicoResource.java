@@ -17,8 +17,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import java.net.URI;
+import javax.validation.Valid;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.turmab.helpdesk.domain.Tecnico;
+import com.turmab.helpdesk.domain.dtos.TecnicoCreateDTO;
 import com.turmab.helpdesk.domain.dtos.TecnicoDTO;
 import com.turmab.helpdesk.service.TecnicoService;
 
@@ -45,7 +49,25 @@ public class TecnicoResource {
 	    return ResponseEntity.ok().body(list);
 	}
 
+	@PostMapping
+	public ResponseEntity<TecnicoDTO> create(@Valid @RequestBody TecnicoCreateDTO objDTO) {
+	    Tecnico newObj = service.create(objDTO);
+	    URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+	            .buildAndExpand(newObj.getId()).toUri();
+	    return ResponseEntity.created(uri).body(new TecnicoDTO(newObj));
+	}
 
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<TecnicoDTO> update(@PathVariable Integer id, @Valid @RequestBody TecnicoCreateDTO objDTO) {
+	    Tecnico obj = service.update(id, objDTO);
+	    return ResponseEntity.ok().body(new TecnicoDTO(obj));
+	}
+
+	@DeleteMapping(value = "/{id}")
+	public ResponseEntity<Void> delete(@PathVariable Integer id) {
+	    service.delete(id);
+	    return ResponseEntity.noContent().build();
+	}
 
 
 }

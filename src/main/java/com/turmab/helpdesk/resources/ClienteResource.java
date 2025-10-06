@@ -6,10 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import java.net.URI;
+import javax.validation.Valid;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.turmab.helpdesk.domain.Cliente;
+import com.turmab.helpdesk.domain.dtos.ClienteCreateDTO;
 import com.turmab.helpdesk.domain.dtos.ClienteDTO;
 import com.turmab.helpdesk.service.ClienteService;
 
@@ -30,5 +39,25 @@ public class ClienteResource {
     public ResponseEntity<List<ClienteDTO>> findAll() {
         List<ClienteDTO> list = service.findAll();
         return ResponseEntity.ok().body(list);
+    }
+    
+    @PostMapping
+    public ResponseEntity<ClienteDTO> create(@Valid @RequestBody ClienteCreateDTO objDTO) {
+        Cliente newObj = service.create(objDTO);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(newObj.getId()).toUri();
+        return ResponseEntity.created(uri).body(new ClienteDTO(newObj));
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<ClienteDTO> update(@PathVariable Integer id, @Valid @RequestBody ClienteCreateDTO objDTO) {
+        Cliente obj = service.update(id, objDTO);
+        return ResponseEntity.ok().body(new ClienteDTO(obj));
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

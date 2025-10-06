@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+
 import com.turmab.helpdesk.domain.Tecnico;
 
 public class TecnicoDTO implements Serializable {
