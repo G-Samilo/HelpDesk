@@ -17,6 +17,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.turmab.helpdesk.security.JWTAuthenticationFilter;
+import com.turmab.helpdesk.security.JWTAuthorizationFilter;
 import com.turmab.helpdesk.security.JWTUtil;
 
 /**
@@ -95,6 +96,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
          * Esse filtro fará login e retornará o token para o cliente quando as credenciais estiverem corretas.
          */
         http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
+        http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));
 
         /**
          * Define que as rotas em PUBLIC_MATCHES são permitidas sem autenticação,

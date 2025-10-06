@@ -3,6 +3,7 @@ package com.turmab.helpdesk.service;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.turmab.helpdesk.domain.Chamado;
@@ -24,10 +25,12 @@ public class DBService {
 	private ClienteRepository clienterepository;
 	@Autowired
 	private ChamadoRepository chamadorepository;
+	@Autowired
+	private BCryptPasswordEncoder encoder;
 	
 	public void instanciaDB() {
 		
-		Tecnico tec1 = new Tecnico(null, "Bill Gates", "76045777093", "bill@mail.com", "123");
+		Tecnico tec1 = new Tecnico(null, "Bill Gates", "76045777093", "bill@mail.com", encoder.encode("123"));
 		tec1.addPerfil(Perfil.ADMIN);
 		
 		Cliente cli1 = new Cliente(null, "Linus Torvalds", "70511744013", "linus@mail.com", "123");
